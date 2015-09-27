@@ -17,9 +17,9 @@ build_requires:
   strict: '0'
   warnings: '0'
 configure_requires:
-  Module::Build::Tiny: '0.007'
+  ExtUtils::MakeMaker: '0'
   perl: '5.006'
-dynamic_config: 0
+dynamic_config: 1
 generated_by: 'Dist::Zilla version 5.039, CPAN::Meta::Converter version 2.150005'
 license: perl
 meta-spec:
@@ -33,43 +33,43 @@ no_index:
 provides:
   MooseX::MethodAttributes:
     file: lib/MooseX/MethodAttributes.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Inheritable:
     file: lib/MooseX/MethodAttributes/Inheritable.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Role:
     file: lib/MooseX/MethodAttributes/Role.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Role::AttrContainer:
     file: lib/MooseX/MethodAttributes/Role/AttrContainer.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Role::AttrContainer::Inheritable:
     file: lib/MooseX/MethodAttributes/Role/AttrContainer/Inheritable.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Role::Meta::Class:
     file: lib/MooseX/MethodAttributes/Role/Meta/Class.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Role::Meta::Map:
     file: lib/MooseX/MethodAttributes/Role/Meta/Map.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Role::Meta::Method:
     file: lib/MooseX/MethodAttributes/Role/Meta/Method.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Role::Meta::Method::MaybeWrapped:
     file: lib/MooseX/MethodAttributes/Role/Meta/Method/MaybeWrapped.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Role::Meta::Method::Wrapped:
     file: lib/MooseX/MethodAttributes/Role/Meta/Method/Wrapped.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Role::Meta::Role:
     file: lib/MooseX/MethodAttributes/Role/Meta/Role.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Role::Meta::Role::Application:
     file: lib/MooseX/MethodAttributes/Role/Meta/Role/Application.pm
-    version: '0.30'
+    version: '0.31'
   MooseX::MethodAttributes::Role::Meta::Role::Application::Summation:
     file: lib/MooseX/MethodAttributes/Role/Meta/Role/Application/Summation.pm
-    version: '0.30'
+    version: '0.31'
 requires:
   Carp: '0'
   Moose: '0'
@@ -86,10 +86,10 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=MooseX-MethodAttributes
   homepage: https://github.com/moose/MooseX-MethodAttributes
   repository: https://github.com/moose/MooseX-MethodAttributes.git
-version: '0.30'
+version: '0.31'
 x_Dist_Zilla:
   perl:
-    version: '5.023001'
+    version: '5.023003'
   plugins:
     -
       class: Dist::Zilla::Plugin::Prereqs
@@ -123,18 +123,18 @@ x_Dist_Zilla:
           phase: build
           skip: []
       name: '@Author::ETHER/stale modules, build'
-      version: '0.045'
+      version: '0.047'
     -
       class: Dist::Zilla::Plugin::PromptIfStale
       config:
         Dist::Zilla::Plugin::PromptIfStale:
-          check_all_plugins: '1'
-          check_all_prereqs: '1'
+          check_all_plugins: 1
+          check_all_prereqs: 1
           modules: []
           phase: release
           skip: []
       name: '@Author::ETHER/stale modules, release'
-      version: '0.045'
+      version: '0.047'
     -
       class: Dist::Zilla::Plugin::FileFinder::ByName
       name: '@Author::ETHER/Examples'
@@ -149,8 +149,9 @@ x_Dist_Zilla:
         Dist::Zilla::Plugin::GatherDir:
           exclude_filename:
             - CONTRIBUTING
+            - INSTALL
             - LICENSE
-            - README.md
+            - README.pod
           exclude_match: []
           follow_symlinks: 0
           include_dotfiles: 0
@@ -389,6 +390,14 @@ x_Dist_Zilla:
               name: '@Author::ETHER/postlude'
               version: '4.012'
             -
+              class: Pod::Weaver::Section::GenerateSection
+              name: '@Author::ETHER/generate SUPPORT'
+              version: '1.01'
+            -
+              class: Pod::Weaver::Section::AllowOverride
+              name: '@Author::ETHER/allow override SUPPORT'
+              version: '0.05'
+            -
               class: Pod::Weaver::Section::Authors
               name: '@Author::ETHER/Authors'
               version: '4.012'
@@ -407,13 +416,6 @@ x_Dist_Zilla:
       name: '@Author::ETHER/SurgicalPodWeaver'
       version: '0.0023'
     -
-      class: Dist::Zilla::Plugin::ReadmeAnyFromPod
-      config:
-        Dist::Zilla::Role::FileWatcher:
-          version: '0.006'
-      name: '@Author::ETHER/ReadmeAnyFromPod'
-      version: '0.150250'
-    -
       class: Dist::Zilla::Plugin::GithubMeta
       name: '@Author::ETHER/GithubMeta'
       version: '0.54'
@@ -427,7 +429,7 @@ x_Dist_Zilla:
         Dist::Zilla::Plugin::AuthorityFromModule:
           module: MooseX::MethodAttributes
         Dist::Zilla::Role::ModuleMetadata:
-          Module::Metadata: '1.000027'
+          Module::Metadata: '1.000029'
           version: '0.003'
       name: '@Author::ETHER/AuthorityFromModule'
       version: '0.006'
@@ -507,36 +509,12 @@ x_Dist_Zilla:
       name: '@Author::ETHER/pod_weaving'
       version: '5.039'
     -
-      class: Dist::Zilla::Plugin::MakeMaker::Fallback
+      class: Dist::Zilla::Plugin::MakeMaker
       config:
         Dist::Zilla::Role::TestRunner:
           default_jobs: 9
-      name: '@Author::ETHER/MakeMaker::Fallback'
-      version: '0.019'
-    -
-      class: Dist::Zilla::Plugin::ModuleBuildTiny::Fallback
-      config:
-        Dist::Zilla::Plugin::ModuleBuildTiny::Fallback:
-          mb_version: '0.28'
-          plugins:
-            -
-              class: Dist::Zilla::Plugin::ModuleBuild
-              config:
-                Dist::Zilla::Role::TestRunner:
-                  default_jobs: 9
-              name: 'ModuleBuild, via ModuleBuildTiny::Fallback'
-              version: '5.039'
-            -
-              class: Dist::Zilla::Plugin::ModuleBuildTiny
-              config:
-                Dist::Zilla::Role::TestRunner:
-                  default_jobs: 9
-              name: 'ModuleBuildTiny, via ModuleBuildTiny::Fallback'
-              version: '0.013'
-        Dist::Zilla::Role::TestRunner:
-          default_jobs: 9
-      name: '@Author::ETHER/ModuleBuildTiny::Fallback'
-      version: '0.018'
+      name: '@Author::ETHER/MakeMaker'
+      version: '5.039'
     -
       class: Dist::Zilla::Plugin::StaticInstall
       config:
@@ -559,7 +537,7 @@ x_Dist_Zilla:
           finder:
             - ':InstallModules'
         Dist::Zilla::Role::ModuleMetadata:
-          Module::Metadata: '1.000027'
+          Module::Metadata: '1.000029'
           version: '0.003'
       name: '@Author::ETHER/CheckSelfDependency'
       version: '0.011'
@@ -652,10 +630,10 @@ x_Dist_Zilla:
       config:
         Dist::Zilla::Plugin::Run::Role::Runner:
           eval:
-            - "unlink 'README.md'"
+            - "unlink 'LICENSE'"
           fatal_errors: 1
           quiet: 1
-      name: '@Author::ETHER/remove old READMEs'
+      name: '@Author::ETHER/remove old LICENSE'
       version: '0.042'
     -
       class: Dist::Zilla::Plugin::CopyFilesFromRelease
@@ -672,6 +650,13 @@ x_Dist_Zilla:
       name: '@Author::ETHER/CopyFilesFromRelease'
       version: '0.006'
     -
+      class: Dist::Zilla::Plugin::ReadmeAnyFromPod
+      config:
+        Dist::Zilla::Role::FileWatcher:
+          version: '0.006'
+      name: '@Author::ETHER/ReadmeAnyFromPod'
+      version: '0.150250'
+    -
       class: Dist::Zilla::Plugin::Git::Commit
       config:
         Dist::Zilla::Plugin::Git::Commit:
@@ -682,8 +667,9 @@ x_Dist_Zilla:
           allow_dirty:
             - CONTRIBUTING
             - Changes
+            - INSTALL
             - LICENSE
-            - README.md
+            - README.pod
           allow_dirty_match: []
           changelog: Changes
         Dist::Zilla::Role::Git::Repo:
@@ -699,7 +685,7 @@ x_Dist_Zilla:
           branch: ~
           changelog: Changes
           signed: 0
-          tag: v0.30
+          tag: v0.31
           tag_format: v%v
           tag_message: v%v%t
         Dist::Zilla::Role::Git::Repo:
@@ -785,6 +771,10 @@ x_Dist_Zilla:
       name: '@Author::ETHER/ConfirmRelease'
       version: '5.039'
     -
+      class: Dist::Zilla::Plugin::DynamicPrereqs
+      name: DynamicPrereqs
+      version: '0.016'
+    -
       class: Dist::Zilla::Plugin::Prereqs
       config:
         Dist::Zilla::Plugin::Prereqs:
@@ -810,7 +800,7 @@ x_Dist_Zilla:
         Dist::Zilla::Plugin::Test::CheckBreaks:
           conflicts_module: Moose::Conflicts
         Dist::Zilla::Role::ModuleMetadata:
-          Module::Metadata: '1.000027'
+          Module::Metadata: '1.000029'
           version: '0.003'
       name: Test::CheckBreaks
       version: '0.012'
@@ -872,4 +862,4 @@ x_contributors:
   - 'Peter E Karman <pek@dewpoint.msi.umn.edu>'
   - 'David Steinbrunner <dsteinbrunner@pobox.com>'
 x_permissions_from_module: MooseX::MethodAttributes
-x_static_install: 1
+x_static_install: 0
